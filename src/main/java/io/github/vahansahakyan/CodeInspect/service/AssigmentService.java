@@ -3,6 +3,7 @@ package io.github.vahansahakyan.CodeInspect.service;
 import java.util.Optional;
 import java.util.Set;
 
+import io.github.vahansahakyan.CodeInspect.enums.AssignmentStatusEnum;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,7 +19,7 @@ public class AssigmentService {
 
   public Assignment save(User user) {
     Assignment assignment = new Assignment();
-    assignment.setStatus("Pending Submission");
+    assignment.setStatus(AssignmentStatusEnum.PENDING_SUBMISSION.getStatus());
     assignment.setUser(user);
     System.out.println("/api/auth");
     return assignmentRepo.save(assignment);

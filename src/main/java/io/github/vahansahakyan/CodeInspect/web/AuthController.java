@@ -22,23 +22,34 @@ import io.github.vahansahakyan.CodeInspect.dto.AuthCredentialsRequest;
 import io.github.vahansahakyan.CodeInspect.util.JwtUtil;
 import io.jsonwebtoken.ExpiredJwtException;
 
+@CrossOrigin
 @RestController
 @RequestMapping("/api/auth")
-@CrossOrigin("http://localhost:5173/")
 public class AuthController {
-
   @Autowired
   private AuthenticationManager authenticationManager;
+
   @Autowired
   private JwtUtil jwtUtil;
 
+  @CrossOrigin
+  @GetMapping("validate")
+  public ResponseEntity<?> validateToken(@RequestParam String token, @AuthenticationPrincipal User user) {
+    try {
+      Boolean isTokenValid = jwtUtil.validateToken(token, user);
+      return ResponseEntity.ok(isTokenValid);
+    } catch (ExpiredJwtException e) {
+      return ResponseEntity.ok(false);
+    }
+  }
+
+  @CrossOrigin
   @PostMapping("login")
-  @CrossOrigin("http://localhost:5173/")
   public ResponseEntity<?> login(@RequestBody AuthCredentialsRequest request) {
 
     try {
       Authentication authenticate = authenticationManager
-          .authenticate(new UsernamePasswordAuthenticationToken(request.getUsername(), request.getPassword()));
+              .authenticate(new UsernamePasswordAuthenticationToken(request.getUsername(), request.getPassword()));
 
       User user = (User) authenticate.getPrincipal();
 
@@ -51,16 +62,5 @@ public class AuthController {
       return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
     }
 
-  }
-
-  @GetMapping("validate")
-  @CrossOrigin("http://localhost:5173/")
-  public ResponseEntity<?> validateToken(@RequestParam String token, @AuthenticationPrincipal User user) {
-    try {
-      Boolean isTokenValid = jwtUtil.validateToken(token, user);
-      return ResponseEntity.ok(isTokenValid);
-    } catch (ExpiredJwtException e) {
-      return ResponseEntity.ok(false);
-    }
   }
 }
