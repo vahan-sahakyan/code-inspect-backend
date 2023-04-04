@@ -18,14 +18,14 @@ import org.springframework.web.bind.annotation.RestController;
 import io.github.vahansahakyan.CodeInspect.domain.Assignment;
 import io.github.vahansahakyan.CodeInspect.domain.User;
 import io.github.vahansahakyan.CodeInspect.dto.AssignmentResponseDto;
-import io.github.vahansahakyan.CodeInspect.service.AssigmentService;
+import io.github.vahansahakyan.CodeInspect.service.AssignmentService;
 
 @CrossOrigin
 @RestController
 @RequestMapping("/api/assignments")
 public class AssignmentController {
   @Autowired
-  private AssigmentService assignmentService;
+  private AssignmentService assignmentService;
 
   @CrossOrigin
   @PostMapping("")
