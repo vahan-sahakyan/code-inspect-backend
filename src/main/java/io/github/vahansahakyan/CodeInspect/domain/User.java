@@ -1,9 +1,7 @@
 package io.github.vahansahakyan.CodeInspect.domain;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
+import java.util.*;
 
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -32,7 +30,7 @@ public class User implements UserDetails {
   private String password;
   @OneToMany(fetch = FetchType.EAGER, mappedBy = "user")
   @JsonIgnore
-  private List<Authority> authorities = new ArrayList<>();
+  private Set<Authority> authorities = new HashSet<>();
 
   public Long getId() {
     return id;
@@ -70,12 +68,13 @@ public class User implements UserDetails {
 
   @Override
   public Collection<? extends GrantedAuthority> getAuthorities() {
-    List<GrantedAuthority> roles = new ArrayList<>();
-    roles.add(new Authority("ROLE_STUDENT"));
-    return roles;
+//    List<GrantedAuthority> roles = new ArrayList<>();
+//    roles.add(new Authority("ROLE_STUDENT"));
+//    return roles;
+    return authorities;
   }
 
-  public void setAuthorities(List<Authority> authorities) {
+  public void setAuthorities(Set<Authority> authorities) {
     this.authorities = authorities;
   }
 
@@ -97,6 +96,25 @@ public class User implements UserDetails {
   @Override
   public boolean isEnabled() {
     return true;
+  }
+
+  @Override
+  public String toString() {
+    StringBuilder sb = new StringBuilder();
+
+    sb.append("[ ");
+    for (Authority auth: authorities) {
+      sb.append("\"" + auth.getAuthority() + "\", ");
+    }
+    sb.append("]");
+
+    return "User {" +
+            " id=" + id +
+            ", username=\"" + username + '\"' +
+            ", name=\"" + username + '\"' +
+            ", cohortStartDate=" + cohortStartDate +
+            ", authorities=" + sb.toString() +
+            '}';
   }
 
 }

@@ -1,5 +1,6 @@
 package io.github.vahansahakyan.CodeInspect.web;
 
+import io.github.vahansahakyan.CodeInspect.domain.Authority;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -8,6 +9,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -49,15 +51,29 @@ public class AuthController {
 
     try {
       Authentication authenticate = authenticationManager
-              .authenticate(new UsernamePasswordAuthenticationToken(request.getUsername(), request.getPassword()));
+        .authenticate(
+          new UsernamePasswordAuthenticationToken(
+            request.getUsername(), request.getPassword()
+          )
+        );
 
       User user = (User) authenticate.getPrincipal();
+
+      System.out.println();
+      System.out.println(user);
+      System.out.println();
+
 
       var token = jwtUtil.generateToken(user);
 
       user.setPassword(token);
 
-      return ResponseEntity.ok().header(HttpHeaders.AUTHORIZATION, token).body((user));
+      return ResponseEntity.ok()
+        .header(
+          HttpHeaders.AUTHORIZATION,
+          token
+        )
+        .body((user));
     } catch (BadCredentialsException ex) {
       return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
     }
