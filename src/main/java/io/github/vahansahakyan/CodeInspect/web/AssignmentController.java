@@ -27,28 +27,24 @@ public class AssignmentController {
   @Autowired
   private AssignmentService assignmentService;
 
-  @CrossOrigin
   @PostMapping("")
   public ResponseEntity<?> createAssignment(@AuthenticationPrincipal User user) {
     Assignment newAssignment = assignmentService.save(user);
     return ResponseEntity.ok(newAssignment);
   }
 
-  @CrossOrigin
   @GetMapping("")
   public ResponseEntity<?> getAssignments(@AuthenticationPrincipal User user) {
     Set<Assignment> assignmentsByUser = assignmentService.findByUser(user);
     return ResponseEntity.ok(assignmentsByUser);
   }
 
-  @CrossOrigin
   @GetMapping("{assignmentId}")
   public ResponseEntity<?> getAssignment(@PathVariable Long assignmentId, @AuthenticationPrincipal User user) {
     Optional<Assignment> assignmentOpt = assignmentService.findById(assignmentId);
     return ResponseEntity.ok(new AssignmentResponseDto(assignmentOpt.orElse(new Assignment())));
   }
 
-  @CrossOrigin
   @PutMapping("{assignmentId}")
   public ResponseEntity<?> updateAssignment(@PathVariable Long assignmentId, @RequestBody Assignment assignment,
       @AuthenticationPrincipal User user) {

@@ -34,7 +34,6 @@ public class AuthController {
   @Autowired
   private JwtUtil jwtUtil;
 
-  @CrossOrigin
   @GetMapping("validate")
   public ResponseEntity<?> validateToken(@RequestParam String token, @AuthenticationPrincipal User user) {
     try {
@@ -45,7 +44,6 @@ public class AuthController {
     }
   }
 
-  @CrossOrigin
   @PostMapping("login")
   public ResponseEntity<?> login(@RequestBody AuthCredentialsRequest request) {
 
