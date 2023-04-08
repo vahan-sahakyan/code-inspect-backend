@@ -1,20 +1,14 @@
 package io.github.vahansahakyan.CodeInspect.domain;
 
-import java.time.LocalDate;
-import java.util.*;
-
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
-
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import javax.persistence.*;
+import java.time.LocalDate;
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name = "users")
@@ -103,18 +97,18 @@ public class User implements UserDetails {
     StringBuilder sb = new StringBuilder();
 
     sb.append("[ ");
-    for (Authority auth: authorities) {
+    for (Authority auth : authorities) {
       sb.append("\"" + auth.getAuthority() + "\", ");
     }
     sb.append("]");
 
     return "User {" +
-            " id=" + id +
-            ", username=\"" + username + '\"' +
-            ", name=\"" + username + '\"' +
-            ", cohortStartDate=" + cohortStartDate +
-            ", authorities=" + sb.toString() +
-            '}';
+        " id=" + id +
+        ", username=\"" + username + '\"' +
+        ", name=\"" + username + '\"' +
+        ", cohortStartDate=" + cohortStartDate +
+        ", authorities=" + sb +
+        '}';
   }
 
 }

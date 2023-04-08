@@ -1,10 +1,9 @@
 package io.github.vahansahakyan.CodeInspect.repository;
 
-import java.util.Optional;
-
+import io.github.vahansahakyan.CodeInspect.domain.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import io.github.vahansahakyan.CodeInspect.domain.User;
+import java.util.Optional;
 
 public interface UserRepository extends JpaRepository<User, Long> {
 

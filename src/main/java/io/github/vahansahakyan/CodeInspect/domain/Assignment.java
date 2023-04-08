@@ -1,10 +1,6 @@
 package io.github.vahansahakyan.CodeInspect.domain;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
 
 @Entity // will create table called assignment (based on classname)
 public class Assignment {
@@ -19,8 +15,9 @@ public class Assignment {
   private String codeReviewVideoUrl;
   @ManyToOne(optional = false)
   private User user;
+  @ManyToOne
+  private User codeReviewer;
 
-  // TODO: private User assignedTo;
   public Long getId() {
     return id;
   }
@@ -75,5 +72,13 @@ public class Assignment {
 
   public void setNumber(Integer number) {
     this.number = number;
+  }
+
+  public User getCodeReviewer() {
+    return codeReviewer;
+  }
+
+  public void setCodeReviewer(User codeReviewer) {
+    this.codeReviewer = codeReviewer;
   }
 }

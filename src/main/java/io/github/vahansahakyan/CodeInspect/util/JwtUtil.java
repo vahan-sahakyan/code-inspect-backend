@@ -1,5 +1,12 @@
 package io.github.vahansahakyan.CodeInspect.util;
 
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.SignatureAlgorithm;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.stereotype.Component;
+
 import java.io.Serializable;
 import java.util.Date;
 import java.util.HashMap;
@@ -7,23 +14,12 @@ import java.util.Map;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
-import io.github.vahansahakyan.CodeInspect.domain.Authority;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.stereotype.Component;
-
-import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
-
 @Component
 public class JwtUtil implements Serializable {
 
-  private static final long serialVersionUID = -3179693206842336369L;
-
   public static final long JWT_TOKEN_VALIDITY = 30 * 24 * 60 * 60;
-//  public static final long JWT_TOKEN_VALIDITY = 5;
-
+  private static final long serialVersionUID = -3179693206842336369L;
+  //  public static final long JWT_TOKEN_VALIDITY = 5;
   @Value("${jwt.secret}")
   private String secret;
 
@@ -61,20 +57,20 @@ public class JwtUtil implements Serializable {
   public String generateToken(UserDetails userDetails) {
     Map<String, Object> claims = new HashMap<>();
     claims.put("authorities", userDetails.getAuthorities()
-            .stream()
-            .map(auth -> auth.getAuthority())
-            .collect(Collectors.toList()));
+        .stream()
+        .map(auth -> auth.getAuthority())
+        .collect(Collectors.toList()));
     return doGenerateToken(claims, userDetails.getUsername());
   }
 
   private String doGenerateToken(Map<String, Object> claims, String subject) {
 
     return Jwts.builder()
-            .setClaims(claims)
-            .setSubject(subject)
-            .setIssuedAt(new Date(System.currentTimeMillis()))
-            .setExpiration(new Date(System.currentTimeMillis() + JWT_TOKEN_VALIDITY * 1000))
-            .signWith(SignatureAlgorithm.HS512, secret).compact();
+        .setClaims(claims)
+        .setSubject(subject)
+        .setIssuedAt(new Date(System.currentTimeMillis()))
+        .setExpiration(new Date(System.currentTimeMillis() + JWT_TOKEN_VALIDITY * 1000))
+        .signWith(SignatureAlgorithm.HS512, secret).compact();
 
   }
 

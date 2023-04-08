@@ -1,15 +1,14 @@
 package io.github.vahansahakyan.CodeInspect.service;
 
-import java.util.Optional;
-
+import io.github.vahansahakyan.CodeInspect.domain.User;
+import io.github.vahansahakyan.CodeInspect.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import io.github.vahansahakyan.CodeInspect.domain.User;
-import io.github.vahansahakyan.CodeInspect.repository.UserRepository;
+import java.util.Optional;
 
 @Service
 public class UserDetailsServiceImpl implements UserDetailsService {

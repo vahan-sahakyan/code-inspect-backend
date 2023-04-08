@@ -1,7 +1,7 @@
 package io.github.vahansahakyan.CodeInspect.config;
 
-import javax.servlet.http.HttpServletResponse;
-
+import io.github.vahansahakyan.CodeInspect.filter.JwtFilter;
+import io.github.vahansahakyan.CodeInspect.util.CustomPasswordEncoder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -13,8 +13,7 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
-import io.github.vahansahakyan.CodeInspect.filter.JwtFilter;
-import io.github.vahansahakyan.CodeInspect.util.CustomPasswordEncoder;
+import javax.servlet.http.HttpServletResponse;
 
 @SuppressWarnings("deprecation")
 @EnableWebSecurity
