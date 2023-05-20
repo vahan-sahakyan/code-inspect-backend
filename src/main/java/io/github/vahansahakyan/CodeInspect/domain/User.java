@@ -1,12 +1,14 @@
 package io.github.vahansahakyan.CodeInspect.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.hibernate.type.LocalDateType;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.Collection;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -17,9 +19,9 @@ public class User implements UserDetails {
   private static final long serialVersionUID = 5742050515818119031L;
 
   @Id
-  @GeneratedValue(strategy = GenerationType.IDENTITY)
+//  @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
-  private LocalDate cohortStartDate;
+  private LocalDate cohortStartDate = LocalDate.parse("2023-01-01");
   private String username;
   private String password;
   @OneToMany(fetch = FetchType.EAGER, mappedBy = "user")

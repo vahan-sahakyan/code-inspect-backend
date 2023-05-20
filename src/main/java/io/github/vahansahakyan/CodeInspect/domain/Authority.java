@@ -9,7 +9,7 @@ public class Authority implements GrantedAuthority {
 
   private static final long serialVersionUID = 3406006329488755431L;
   @Id
-  @GeneratedValue(strategy = GenerationType.IDENTITY)
+//  @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
   private String authority;
   @ManyToOne(optional = false)
