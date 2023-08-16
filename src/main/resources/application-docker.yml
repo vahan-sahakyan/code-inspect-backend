@@ -1,0 +1,4 @@
+spring:
+  datasource:
+    url: jdbc:mysql://mysql-container/code_inspect_db
+    password: asdfasdf

@@ -1,11 +1,10 @@
 spring:
+  profiles:
+    active: local
   datasource:
-    url: jdbc:mysql://localhost:3306/code_inspect_db
-    username: vahan
-    password: 123456
-#    url: jdbc:mysql://mysql-container/code_inspect_db
-#    username: root
-#    password: asdfasdf
+    url: ${spring.datasource.url}
+    username: root
+    password: ${spring.datasource.password}
     hikari:
       connectionTimeout: 20000
   security:

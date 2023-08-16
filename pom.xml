@@ -11,7 +11,7 @@
     <groupId>io.github.vahan-sahakyan</groupId>
     <artifactId>CodeInspect</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <packaging>war</packaging>
+    <packaging>jar</packaging>
     <name>CodeInspect</name>
     <description>Platform to Submit and Review Code</description>
     <properties>
