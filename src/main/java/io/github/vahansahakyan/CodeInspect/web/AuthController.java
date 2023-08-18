@@ -6,7 +6,6 @@ import io.github.vahansahakyan.CodeInspect.dto.AuthCredentialsRequest;
 import io.github.vahansahakyan.CodeInspect.dto.SignUpRequest;
 import io.github.vahansahakyan.CodeInspect.repository.AuthorityRepository;
 import io.github.vahansahakyan.CodeInspect.repository.UserRepository;
-import io.github.vahansahakyan.CodeInspect.service.UserService;
 import io.github.vahansahakyan.CodeInspect.util.JwtUtil;
 import io.jsonwebtoken.ExpiredJwtException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -56,16 +55,13 @@ public class AuthController {
       Authentication authenticate = authenticationManager
           .authenticate(
               new UsernamePasswordAuthenticationToken(
-                  request.getUsername(), request.getPassword()
-              )
-          );
+                  request.getUsername(), request.getPassword()));
 
       User user = (User) authenticate.getPrincipal();
 
       System.out.println();
       System.out.println(user);
       System.out.println();
-
 
       var token = jwtUtil.generateToken(user);
 
@@ -74,14 +70,14 @@ public class AuthController {
       return ResponseEntity.ok()
           .header(
               HttpHeaders.AUTHORIZATION,
-              token
-          )
+              token)
           .body((user));
     } catch (BadCredentialsException ex) {
       return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
     }
 
   }
+
   @PostMapping("signup")
   public ResponseEntity<?> signup(@RequestBody SignUpRequest request) {
 
@@ -90,8 +86,7 @@ public class AuthController {
       PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
       String encodedPassword = passwordEncoder.encode(request.getPassword());
 
-
-      user.setId((Long)(userRepo.count() + 1L));
+      user.setId((Long) (userRepo.count() + 1L));
       user.setName(request.getName());
       user.setUsername(request.getUsername());
       user.setPassword(encodedPassword);
@@ -107,12 +102,11 @@ public class AuthController {
       userRepo.save(user);
 
       Authority newAuthority = new Authority();
-      newAuthority.setId((Long)(authorityRepo.count() + 1L));
+      newAuthority.setId((Long) (authorityRepo.count() + 1L));
       newAuthority.setAuthority(request.getAuthority());
       newAuthority.setUser(user);
 
       authorityRepo.save(newAuthority);
-
 
       return ResponseEntity.ok()
           .body(user);
