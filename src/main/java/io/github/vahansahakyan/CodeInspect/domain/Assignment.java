@@ -81,4 +81,18 @@ public class Assignment {
   public void setCodeReviewer(User codeReviewer) {
     this.codeReviewer = codeReviewer;
   }
+
+  @Override
+  public String toString() {
+    return "ASSIGNMENT {" +
+        "id=" + id +
+        ", number=" + number +
+        ", status='" + status + '\'' +
+        ", githubUrl='" + githubUrl + '\'' +
+        ", branch='" + branch + '\'' +
+        ", codeReviewVideoUrl='" + codeReviewVideoUrl + '\'' +
+        ", user=" + user +
+        ", codeReviewer=" + codeReviewer +
+        '}';
+  }
 }

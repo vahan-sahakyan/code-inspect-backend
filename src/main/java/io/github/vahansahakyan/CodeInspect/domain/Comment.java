@@ -60,4 +60,15 @@ public class Comment {
   public void setAssignment(Assignment assignment) {
     this.assignment = assignment;
   }
+
+  @Override
+  public String toString() {
+    return "COMMENT {" +
+        "id=" + id +
+        ", assignment=" + assignment +
+        ", createdBy=" + createdBy +
+        ", createdDate=" + createdDate +
+        ", text='" + text + '\'' +
+        '}';
+  }
 }

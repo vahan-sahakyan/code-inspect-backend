@@ -1,6 +1,8 @@
 spring:
   profiles:
     active: local
+  kafka:
+    bootstrap-servers: ${spring.kafka.bootstrap-servers}
   datasource:
     url: ${spring.datasource.url}
     username: root
@@ -21,4 +23,3 @@ spring:
 
 jwt:
   secret: mvY&IQwYVCUoPF3JcxoNpi0yhq04ryW!a#MUWCY4m8tr1%99sjJcxoNpi0yhq04ryW!a
-

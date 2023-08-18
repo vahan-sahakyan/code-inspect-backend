@@ -17,12 +17,17 @@ public class AssignmentService {
   @Autowired
   private AssignmentRepository assignmentRepo;
 
+  @Autowired
+  private DbChangeService dbChangesService;
+
   public Assignment save(User user) {
     Assignment assignment = new Assignment();
     assignment.setStatus(AssignmentStatusEnum.PENDING_SUBMISSION.getStatus());
     assignment.setNumber(findNextAssignmentToSubmit(user));
     assignment.setUser(user);
     System.out.println("/api/auth");
+    dbChangesService.processDbChange("CREATE ASSIGNMENT #"
+        + assignment.getNumber());
     return assignmentRepo.save(assignment);
   }
 
@@ -33,12 +38,15 @@ public class AssignmentService {
     }
     Optional<Integer> nextAssignmentNumOpt = assignmentsByUser.stream()
         .sorted((a1, a2) -> {
-          if (a1.getNumber() == null) return 1;
-          if (a2.getNumber() == null) return 1;
+          if (a1.getNumber() == null)
+            return 1;
+          if (a2.getNumber() == null)
+            return 1;
           return a2.getNumber().compareTo(a1.getNumber());
         })
         .map(assignment -> {
-          if (assignment.getNumber() == null) return 1;
+          if (assignment.getNumber() == null)
+            return 1;
           return assignment.getNumber() + 1;
         })
         .findFirst();
@@ -66,6 +74,10 @@ public class AssignmentService {
   }
 
   public Assignment save(Assignment assignment) {
+    dbChangesService.processDbChange("UPDATE ASSIGNMENT #"
+        + assignment.getNumber()
+        + " id: "
+        + assignment.getId());
     return assignmentRepo.save(assignment);
   }
 
