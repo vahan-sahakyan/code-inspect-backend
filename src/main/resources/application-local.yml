@@ -1,6 +1,6 @@
 spring:
   datasource:
-    url: jdbc:mysql://localhost:3306/code_inspect_db
+    url: jdbc:mysql://localhost:3307/code_inspect_db
     password: asdfasdf
   kafka:
     bootstrap-servers: 192.168.1.26:9092
