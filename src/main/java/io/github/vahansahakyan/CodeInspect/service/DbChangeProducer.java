@@ -9,7 +9,11 @@ public class DbChangeProducer {
     @Autowired
     private KafkaTemplate<String, String> kafkaTemplate;
 
+    private final Boolean kafkaEnabled = Boolean.parseBoolean(System.getenv("ENABLE_KAFKA"));
+
     public void sendDbChangeMessage(String message) {
-        kafkaTemplate.send("db-changes", message);
+        if (this.kafkaEnabled) {
+            kafkaTemplate.send("db-changes", message);
+        }
     }
 }
